@@ -14,16 +14,16 @@ router.use(express.json());
 //POST Signup
 router.post("/api/signup", async (req, res) => {
   //destructuring
-
   const { username, email, password } = req.body;
 
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
-  const sqlQuery =
-    "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+  const sqlQuery = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
 
   db.query(sqlQuery, [username, email, passwordHash], (error, result) => {
+
     if (error) {
+
       return res.status(500).send({ message: error.sqlMessage });
     }
 
@@ -39,15 +39,20 @@ router.post("/api/login", (req, res) => {
   const sqlQuery = "SELECT * FROM users WHERE email = ?";
 
   db.query(sqlQuery, [email], async (error, result) => {
+
     if (error) {
+
       return res.status(500).send({ message: error.sqlMessage });
+
     } else if (result.length == 0) {
+
       return res.status(400).send({ message: "Incorrect email" });
     }
 
     const passwordHash = result[0].password;
 
     if (!(await bcrypt.compare(password, passwordHash))) {
+
       return res.status(400).send({ message: "Incorrect password" });
     }
 
@@ -60,7 +65,9 @@ router.post("/api/login", (req, res) => {
 });
 
 router.get("/api/logout", (req, res) => {
+
   if (!req.session.user) {
+
     return res.status(400).send({ message: "Logout failed: Must be logged in" });
   }
 
