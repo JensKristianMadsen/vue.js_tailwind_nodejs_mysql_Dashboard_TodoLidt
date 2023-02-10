@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.use(express.json());
 
-//POST
+//POST Signup
 router.post("/api/signup", async (req, res) => {
   //destructuring
 
@@ -29,6 +29,44 @@ router.post("/api/signup", async (req, res) => {
 
     return res.status(201).send({ message: "User is signed up" });
   });
+});
+
+// POST Login
+
+router.post("/api/login", (req, res) => {
+  const { email, password } = req.body;
+
+  const sqlQuery = "SELECT * FROM users WHERE email = ?";
+
+  db.query(sqlQuery, [email], async (error, result) => {
+    if (error) {
+      return res.status(500).send({ message: error.sqlMessage });
+    } else if (result.length == 0) {
+      return res.status(400).send({ message: "Incorrect email" });
+    }
+
+    const passwordHash = result[0].password;
+
+    if (!(await bcrypt.compare(password, passwordHash))) {
+      return res.status(400).send({ message: "Incorrect password" });
+    }
+
+    const { id, username, email } = result[0];
+
+    req.session.user = { id, username, email };
+
+    res.status(200).send(req.session.user);
+  });
+});
+
+router.get("/api/logout", (req, res) => {
+  if (!req.session.user) {
+    return res.status(400).send({ message: "Logout failed: Must be logged in" });
+  }
+
+  delete req.session.user;
+
+  res.status(200).send({ message: "Logout succeded" });
 });
 
 export default router;
