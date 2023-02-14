@@ -4,6 +4,7 @@
   <div class="container">
  <!--parent component props from Header.vue -->
     <Header title="Task Tracker" />
+    <Tasks :tasks="tasks" />
 
   </div>
 </template>
@@ -13,13 +14,42 @@
 import Header from './components/Header.vue';
 // Navbar
 import Navbar from './components/Navbar.vue';
-
+// Tasks
+import Tasks from './components/Tasks.vue';
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    Header
+    Header,
+    Tasks
+  },
+  data() {
+    return {
+      tasks: []
+    }
+  },
+  created() {
+    this.tasks = [
+      {
+        id: 1,
+        text: 'Doctors Appointment',
+        day: 'March 1st at 2:30pm',
+        reminder: true,
+      },
+      {
+        id: 2,
+        text: 'Meeting at School',
+        day: 'March 4st at 4:30pm',
+        reminder: true,
+      },
+      {
+        id: 3,
+        text: 'Car Appointment',
+        day: 'March 15st at 2:45pm',
+        reminder: false,
+      },
+    ]
   },
 }
 </script>
