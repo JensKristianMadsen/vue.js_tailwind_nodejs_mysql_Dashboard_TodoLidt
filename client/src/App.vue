@@ -4,7 +4,7 @@
  <div class="container">
 <!--parent component props from Header.vue -->
    <Header title="Task Tracker" />
-   <Tasks @delete-task="deleteTask" :tasks="tasks" />
+   <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
 
  </div>
 </template>
@@ -36,6 +36,10 @@ export default {
     console.log('task', id)
     }
  
+  },
+  toggleReminder(id){
+    console.log(id)
+
   }
 
  },
