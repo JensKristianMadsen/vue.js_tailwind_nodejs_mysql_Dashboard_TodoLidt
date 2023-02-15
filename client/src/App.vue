@@ -38,10 +38,10 @@ export default {
  
   },
   toggleReminder(id){
-    console.log(id)
-
-  }
-
+    //this.tasks = map(we create ny array) in map((we a tæker is the samme id )=> { if is true ? seppe oprapeetter ...task, we take riminder !task.reminder(so if et a true make to false and if false make to true) IF id it not the samme  else just show task}) 
+    this.tasks = this.tasks.map((task) => task.id === id 
+    ? {...task, reminder: !task.reminder} : task)
+  },
  },
 
  created() {
