@@ -4,25 +4,30 @@
  <div class="container">
 <!--parent component props from Header.vue -->
    <Header title="Task Tracker" />
+   <AddTask />
    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
 
  </div>
 </template>
 
 <script>
+/* imports */
 // Header
 import Header from './components/Header.vue';
 // Navbar
 import Navbar from './components/Navbar.vue';
 // Tasks
 import Tasks from './components/Tasks.vue';
+// AddTask
+import AddTask from './components/AddTask.vue';
 
 export default {
  name: 'App',
  components: {
    Navbar,
    Header,
-   Tasks
+   Tasks,
+   AddTask
  },
  data() {
    return {
