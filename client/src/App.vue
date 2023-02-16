@@ -3,7 +3,7 @@
   
  <div class="container">
 <!--parent component props from Header.vue -->
-   <Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showAddTask="showAddTask" />
+<Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showAddTask="showAddTask" />
    <div v-show="showAddTask">
     <AddTask @add-task="addTask" />
    </div>
