@@ -3,8 +3,11 @@
   
  <div class="container">
 <!--parent component props from Header.vue -->
-   <Header title="Task Tracker" />
-   <AddTask />
+   <Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showAddTask="showAddTask" />
+   <div v-show="showAddTask">
+    <AddTask @add-task="addTask" />
+   </div>
+ 
    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
 
  </div>
@@ -12,6 +15,7 @@
 
 <script>
 /* imports */
+
 // Header
 import Header from './components/Header.vue';
 // Navbar
@@ -21,6 +25,8 @@ import Tasks from './components/Tasks.vue';
 // AddTask
 import AddTask from './components/AddTask.vue';
 
+
+/* export default */
 export default {
  name: 'App',
  components: {
@@ -29,12 +35,25 @@ export default {
    Tasks,
    AddTask
  },
+
+/* data */
  data() {
    return {
-     tasks: []
+     tasks: [],
+     showAddTask: false
    }
  },
+
+ /* methods */
  methods: {
+  toggleAddTask() {
+    this.showAddTask = !this.showAddTask
+  },
+
+  addTask(task) {
+    this.tasks = [...this.tasks, task]
+  },
+
   deleteTask(id) {
     if(confirm('Are you sure?')) {
       this.tasks = this.tasks.filter((task) => task.id !== id);
@@ -48,7 +67,7 @@ export default {
     ? {...task, reminder: !task.reminder} : task)
   },
  },
-
+/* Lifecycle */
  created() {
    this.tasks = [
      {
@@ -96,7 +115,7 @@ body {
 .btn {
  display: inline-block;
  background: #000;
- color: #fff;
+ color: #000000;
  border: none;
  padding: 10px 20px;
  margin: 5px;
