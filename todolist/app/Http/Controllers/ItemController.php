@@ -56,7 +56,7 @@ class ItemController extends Controller
     //}
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage.ok.
      */
 
     public function update(Request $request, $id)
