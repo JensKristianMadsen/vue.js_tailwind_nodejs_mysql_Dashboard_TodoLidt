@@ -24,11 +24,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // All Items '/items' , efter the comma and pass it array[the controller we goin to use], now going to be specific function that we want this route to hit is "index"
 // GET all
 Route::get('/items', [ItemController::class, 'index']);
-Route::prefix('item')->group(function () {
-    // Create
-    Route::post('store', [ItemController::class, 'store']);
-    // Update
-    Route::post('/{id}', [ItemController::class, 'update']);
-    // Delete
-    Route::post('store', [ItemController::class, 'store']);
-});
+Route::prefix('/item')->group(
+    function () {
+        // Create
+        Route::post('/store', [ItemController::class, 'store']);
+        // Update
+        Route::put('/{id}', [ItemController::class, 'update']);
+        // Delete
+        Route::delete('/{id}', [ItemController::class, 'destroy']);
+    }
+);
